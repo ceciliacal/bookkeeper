@@ -18,36 +18,41 @@
  */
 package org.apache.bookkeeper.client;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import java.util.concurrent.atomic.AtomicInteger;
 import org.apache.bookkeeper.client.BKException.Code;
 import org.apache.bookkeeper.client.api.WriteFlag;
 import org.apache.bookkeeper.common.util.OrderedExecutor;
+import org.apache.bookkeeper.net.BookieSocketAddress;
 import org.apache.bookkeeper.proto.BookieClient;
 import org.apache.bookkeeper.stats.NullStatsLogger;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 /**
  * Unit test of {@link PendingAddOp}.
  */
-public class PendingAddOpTest {
+public class PendingReadOpTest {
 
     private LedgerHandle lh;
     private ClientContext mockClientContext;
 
+
+    //parametri per test del metodo Complete
+    private int bookieIndex;
+    private BookieSocketAddress host;   //valori:{valido, non valido, null}
     private ByteBuf payload;
 
     @Before
     public void setup() {
+
         BookKeeperClientStats clientStats = BookKeeperClientStats.newInstance(NullStatsLogger.INSTANCE);
         BookieClient bookieClient = mock(BookieClient.class);
         OrderedExecutor mainWorkerPool = mock(OrderedExecutor.class);
@@ -63,8 +68,22 @@ public class PendingAddOpTest {
         byte[] data = "test-pending-add-op".getBytes(UTF_8);
         payload = Unpooled.wrappedBuffer(data);
         payload.writerIndex(data.length);
+
+         // ==============================================
+
+        int myFirstError = 0;
+        int myNumBookies = 0;
+        PendingReadOp myPend = new PendingReadOp(lh,mockClientContext,0,0,true);
+
     }
 
+    @Test
+    public void testProva(){
+        assertEquals(2,2);
+        System.out.println("test ok");
+    }
+
+    /*
     @Test
     public void testExecuteAfterCancelled() {
         AtomicInteger rcHolder = new AtomicInteger(-0xdead);
@@ -86,5 +105,7 @@ public class PendingAddOpTest {
         // after the op is run, the object is recycled.
         assertNull(op.lh);
     }
+
+     */
 
 }

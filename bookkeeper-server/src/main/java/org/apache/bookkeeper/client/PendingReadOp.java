@@ -132,11 +132,11 @@ class PendingReadOp implements ReadEntryCallback, SafeRunnable {
          */
         boolean complete(int bookieIndex, BookieSocketAddress host, final ByteBuf buffer) {
             ByteBuf content;
-            if (isComplete()) {
+            if (isComplete()) {     //already completed
                 return false;
             }
             try {
-                content = lh.macManager.verifyDigestAndReturnData(eId, buffer);
+                content = lh.macManager.verifyDigestAndReturnData(eId, buffer); //mock di lh
             } catch (BKDigestMatchException e) {
                 clientCtx.getClientStats().getReadOpDmCounter().inc();
                 logErrorAndReattemptRead(bookieIndex, host, "Mac mismatch", BKException.Code.DigestMatchException);

@@ -287,7 +287,7 @@ class PendingAddOp extends SafeRunnable implements WriteCallback {
         int bookieIndex = (Integer) ctx;
         --pendingWriteRequests;
 
-        if (!ensemble.get(bookieIndex).equals(addr)) {
+        if (!ensemble.get(bookieIndex).equals(addr)) {  //mock
             // ensemble has already changed, failure of this addr is immaterial
             if (LOG.isDebugEnabled()) {
                 LOG.debug("Write did not succeed: " + ledgerId + ", " + entryId + ". But we have already fixed it.");
