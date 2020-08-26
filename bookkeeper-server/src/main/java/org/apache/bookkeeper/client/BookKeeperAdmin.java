@@ -1575,16 +1575,17 @@ public class BookKeeperAdmin implements AutoCloseable {
             }
         }
     }
-
+//sto testando questo (ledgerMetadata)
     public static boolean areEntriesOfLedgerStoredInTheBookie(long ledgerId, BookieSocketAddress bookieAddress,
             LedgerMetadata ledgerMetadata) {
         Collection<? extends List<BookieSocketAddress>> ensemblesOfSegments = ledgerMetadata.getAllEnsembles().values();
         Iterator<? extends List<BookieSocketAddress>> ensemblesOfSegmentsIterator = ensemblesOfSegments.iterator();
         List<BookieSocketAddress> ensemble;
         int segmentNo = 0;
-        while (ensemblesOfSegmentsIterator.hasNext()) {
-            ensemble = ensemblesOfSegmentsIterator.next();
-            if (ensemble.contains(bookieAddress)) {
+        while (ensemblesOfSegmentsIterator.hasNext()) {     //finchè nella lista di bookieAddress ce n'è uno successivo
+            ensemble = ensemblesOfSegmentsIterator.next();  //metto lista successiva come lista corrente
+            if (ensemble.contains(bookieAddress)) {         //se in quell'ensemble c'è il bookie che cerco, controllo se
+                                                            //entries di quel numero di segmento sono ne bookie
                 if (areEntriesOfSegmentStoredInTheBookie(ledgerMetadata, bookieAddress, segmentNo)) {
                     return true;
                 }
