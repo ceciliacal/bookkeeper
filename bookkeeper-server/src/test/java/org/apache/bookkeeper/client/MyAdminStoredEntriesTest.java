@@ -4,6 +4,7 @@ package org.apache.bookkeeper.client;
 import org.apache.bookkeeper.client.api.LedgerMetadata;
 import org.apache.bookkeeper.net.BookieSocketAddress;
 import org.apache.bookkeeper.test.BookKeeperClusterTestCase;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -75,6 +76,11 @@ public class MyAdminStoredEntriesTest extends BookKeeperClusterTestCase {
         ensembleOfSegment2.add(bookie2);
 
 
+    }
+
+    @After
+    public void tearDown() throws Exception{
+        super.tearDown();
     }
 
 
