@@ -87,8 +87,8 @@ public class BookKeeperTestClient extends BookKeeper {
      */
     private Future<?> waitForBookieInSet(BookieSocketAddress b,
                                                        boolean writable) throws Exception {
-        log.info("Wait for {} to become {}",
-                 b, writable ? "writable" : "readonly");
+        //log.info("Wait for {} to become {}",
+        //         b, writable ? "writable" : "readonly");
 
         CompletableFuture<Void> readOnlyFuture = new CompletableFuture<>();
         CompletableFuture<Void> writableFuture = new CompletableFuture<>();

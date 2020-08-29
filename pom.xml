@@ -1,19 +1,3 @@
-<!--
-   Licensed to the Apache Software Foundation (ASF) under one or more
-   contributor license agreements.  See the NOTICE file distributed with
-   this work for additional information regarding copyright ownership.
-   The ASF licenses this file to You under the Apache License, Version 2.0
-   (the "License"); you may not use this file except in compliance with
-   the License.  You may obtain a copy of the License at
-
-       http://www.apache.org/licenses/LICENSE-2.0
-
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
--->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
@@ -70,7 +54,8 @@
     <module>bookkeeper-dist</module>
     <module>shaded</module>
     <module>microbenchmarks</module>
-   
+    <module>tests</module>
+
   </modules>
   <mailingLists>
     <mailingList>
@@ -105,12 +90,14 @@
     </developer>
   </developers>
   <properties>
+    <aggregate.report.dir>tests/target/site/jacoco-aggregate/jacoco.xml</aggregate.report.dir>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.targer>11</maven.compiler.targer>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <javac.target>1.8</javac.target>
-  
 
-    <!-- dependencies -->
+
+    <javac.target>1.8</javac.target>
     <arquillian-cube.version>1.18.2</arquillian-cube.version>
     <arquillian-junit.version>1.6.0.Final</arquillian-junit.version>
     <codahale.metrics.version>3.0.1</codahale.metrics.version>
@@ -170,7 +157,6 @@
     <vertx.version>3.4.1</vertx.version>
     <zookeeper.version>3.5.7</zookeeper.version>
     <jctools.version>2.1.2</jctools.version>
-    <!-- plugin dependencies -->
     <apache-rat-plugin.version>0.12</apache-rat-plugin.version>
     <cobertura-maven-plugin.version>2.7</cobertura-maven-plugin.version>
     <coveralls-maven-plugin.version>4.3.0</coveralls-maven-plugin.version>
@@ -190,13 +176,15 @@
     <maven-javadoc-plugin.version>3.1.1</maven-javadoc-plugin.version>
     <maven-shade-plugin.version>3.2.0</maven-shade-plugin.version>
     <maven-source-plugin.version>2.2.1</maven-source-plugin.version>
-    <maven-surefire-plugin.version>2.21.0</maven-surefire-plugin.version>
+    <maven-surefire-plugin.version>3.0.0-M4</maven-surefire-plugin.version>
     <nar-maven-plugin.version>3.5.2</nar-maven-plugin.version>
     <os-maven-plugin.version>1.4.1.Final</os-maven-plugin.version>
     <protobuf-maven-plugin.version>0.5.0</protobuf-maven-plugin.version>
     <puppycrawl.checkstyle.version>6.19</puppycrawl.checkstyle.version>
     <spotbugs-maven-plugin.version>3.1.8</spotbugs-maven-plugin.version>
     <forkCount.variable>1</forkCount.variable>
+
+
   </properties>
 
   <!-- dependency definitions -->
@@ -795,6 +783,16 @@
     <pluginManagement>
       <plugins>
         <plugin>
+          <groupId>org.sonarsource.scanner.maven</groupId>
+          <artifactId>sonar-maven-plugin</artifactId>
+          <version>3.6.0.1398</version>
+        </plugin>
+        <plugin>
+          <groupId>org.jacoco</groupId>
+          <artifactId>jacoco-maven-plugin</artifactId>
+          <version>0.8.4</version>
+        </plugin>
+        <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-checkstyle-plugin</artifactId>
           <version>${maven-checkstyle-plugin.version}</version>
@@ -804,6 +802,7 @@
               <artifactId>checkstyle</artifactId>
               <version>${puppycrawl.checkstyle.version}</version>
             </dependency>
+
           </dependencies>
           <configuration>
             <configLocation>buildtools/src/main/resources/bookkeeper/checkstyle.xml</configLocation>
@@ -828,6 +827,17 @@
     </pluginManagement>
     <plugins>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.0.0-M4</version>
+        <configuration>
+          <forkCount>${forkCount.variable}</forkCount>
+          <reuseForks>false</reuseForks>
+          <forkedProcessTimeoutInSeconds>1800</forkedProcessTimeoutInSeconds>
+          <rerunFailingTestsCount>0</rerunFailingTestsCount>
+        </configuration>
+      </plugin>
+      <plugin>
         <groupId>com.github.spotbugs</groupId>
         <artifactId>spotbugs-maven-plugin</artifactId>
         <version>${spotbugs-maven-plugin.version}</version>
@@ -850,17 +860,7 @@
 	      </compilerArgs>
         </configuration>
       </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>${maven-surefire-plugin.version}</version>
-        <configuration>
-          <forkCount>${forkCount.variable}</forkCount>
-          <reuseForks>false</reuseForks>
-          <forkedProcessTimeoutInSeconds>1800</forkedProcessTimeoutInSeconds>
-          <rerunFailingTestsCount>${testRetryCount}</rerunFailingTestsCount>
-        </configuration>
-      </plugin>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
@@ -1000,35 +1000,18 @@
   </build>
   <profiles>
     <profile>
-      <!-- profile used by jenkins CI -->
-      <id>code-coverage</id>
+      <id>coverage</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
       <build>
         <plugins>
           <plugin>
-            <groupId>org.eluder.coveralls</groupId>
-            <artifactId>coveralls-maven-plugin</artifactId>
-            <version>${coveralls-maven-plugin.version}</version>
-          </plugin>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <version>${maven-surefire-plugin.version}</version>
-            <configuration>
-              <!-- @{argLine} is a variable injected by JaCoCo-->
-              <argLine>@{argLine} -Xmx2G -Djava.net.preferIPv4Stack=true</argLine>
-              <forkCount>${forkCount.variable}</forkCount>
-              <reuseForks>false</reuseForks>
-              <forkedProcessTimeoutInSeconds>1800</forkedProcessTimeoutInSeconds>
-              <!-- we want build to complete even in case of failures -->
-              
-            </configuration>
-          </plugin>
-          <plugin>
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
-            <version>0.8.0</version>
             <executions>
               <execution>
+                <id>prepare-agent</id>
                 <goals>
                   <goal>prepare-agent</goal>
                 </goals>
@@ -1038,50 +1021,6 @@
         </plugins>
       </build>
     </profile>
-
-    <!-- the profiles below are only for development purpose -->
-    <profile>
-      <id>dev</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <version>${maven-surefire-plugin.version}</version>
-            <configuration>
-              <argLine>-Xmx2G -Djava.net.preferIPv4Stack=true</argLine>
-              
-              <forkCount>${forkCount.variable}</forkCount>
-              <reuseForks>false</reuseForks>
-              <forkedProcessTimeoutInSeconds>1800</forkedProcessTimeoutInSeconds>
-              <trimStackTrace>false</trimStackTrace>
-              
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>dev-debug</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <version>${maven-surefire-plugin.version}</version>
-            <configuration>
-              <argLine>-Xmx2G -Djava.net.preferIPv4Stack=true -Dbookkeeper.root.logger=DEBUG,CONSOLE</argLine>
-              
-              <forkCount>${forkCount.variable}</forkCount>
-              <reuseForks>false</reuseForks>
-              <forkedProcessTimeoutInSeconds>1800</forkedProcessTimeoutInSeconds>
-              <trimStackTrace>false</trimStackTrace>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-
     <profile>
       <id>jdk11-no-spotbugs</id>
       <activation>
@@ -1089,17 +1028,19 @@
       </activation>
       <build>
         <plugins>
-           <plugin>
-             <groupId>com.github.spotbugs</groupId>
-             <artifactId>spotbugs-maven-plugin</artifactId>
-             <configuration>
-                 <skip>true</skip>
-             </configuration>
+          <plugin>
+            <groupId>com.github.spotbugs</groupId>
+            <artifactId>spotbugs-maven-plugin</artifactId>
+            <configuration>
+              <skip>true</skip>
+            </configuration>
           </plugin>
         </plugins>
       </build>
     </profile>
 
+
+    
     <profile>
       <id>apache-release</id>
       <build>
@@ -1110,7 +1051,6 @@
               <execution>
                 <id>source-release-assembly</id>
                 <configuration>
-                  <!-- we have a dedicated distribution module in bookkeeper-dist -->
                   <skipAssembly>true</skipAssembly>
                 </configuration>
               </execution>
