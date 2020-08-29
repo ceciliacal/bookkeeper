@@ -129,7 +129,7 @@ public class MyAsyncReadEntryTest extends BookKeeperClusterTestCase implements A
                 {true, 0, 0, true, sync},
                 {false, -50, -2, true, sync},
                 {true, 0, numEntries, true, null},
-                {false, 0, numEntries, null, sync}
+                //{false, 0, numEntries, null, sync}
 
 
         });
