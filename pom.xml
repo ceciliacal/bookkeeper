@@ -1036,7 +1036,7 @@
       <id>jdk11-no-spotbugs</id>
       <activation>
         <jdk>[11,)</jdk>
-      </acti
+      </activation>
       <build>
         <plugins>
           <plugin>
