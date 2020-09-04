@@ -52,7 +52,7 @@
   </ciManagement>
   <modules>
     <module>buildtools</module>
-    <module>circe-checksum</module>
+    <!--<module>circe-checksum</module>-->
     <module>bookkeeper-common</module>
     <module>bookkeeper-common-allocator</module>
     <module>stats</module>
@@ -193,17 +193,29 @@
     <maven-shade-plugin.version>3.2.0</maven-shade-plugin.version>
     <maven-source-plugin.version>2.2.1</maven-source-plugin.version>
     <maven-surefire-plugin.version>3.0.0-M4</maven-surefire-plugin.version>
-    <nar-maven-plugin.version>3.5.2</nar-maven-plugin.version>
-    <os-maven-plugin.version>1.4.1.Final</os-maven-plugin.version>
-    <protobuf-maven-plugin.version>0.5.0</protobuf-maven-plugin.version>
-    <puppycrawl.checkstyle.version>6.19</puppycrawl.checkstyle.version>
-    <spotbugs-maven-plugin.version>3.1.8</spotbugs-maven-plugin.version>
-    <forkCount.variable>1</forkCount.variable>
+  <!--<nar-maven-plugin.version>3.5.2</nar-maven-plugin.version>-->
 
 
-  </properties>
 
-  <!-- dependency definitions -->
+
+
+
+
+
+
+
+
+
+ <os-maven-plugin.version>1.4.1.Final</os-maven-plugin.version>
+ <protobuf-maven-plugin.version>0.5.0</protobuf-maven-plugin.version>
+ <puppycrawl.checkstyle.version>6.19</puppycrawl.checkstyle.version>
+ <spotbugs-maven-plugin.version>3.1.8</spotbugs-maven-plugin.version>
+ <forkCount.variable>1</forkCount.variable>
+
+
+</properties>
+
+<!-- dependency definitions -->
   <dependencyManagement>
     <dependencies>
       <!-- provided dependencies -->
@@ -877,7 +889,7 @@
         </configuration>
       </plugin>
 
-      <plugin>
+        <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
         <version>${maven-javadoc-plugin.version}</version>
@@ -896,13 +908,6 @@
             <group>
               <title>Bookkeeper Client (New Fluent API - Experimental)</title>
               <packages>org.apache.bookkeeper.client.api</packages>
-            </group>
-            <group>
-              <title>Bookkeeper Stats API</title>
-              <!-- currently codahale is placed under `stats` package unfortunately.
-                   we have done a copy to its own package in future in 4.7.0, will remove it in 4.8.0.
-                   {@link https://github.com/apache/bookkeeper/issues/762} -->
-              <packages>org.apache.bookkeeper.stats</packages>
             </group>
             <group>
               <title>Bookkeeper Stats Providers</title>

@@ -24,14 +24,11 @@
   </parent>
 
   <artifactId>cpu-affinity</artifactId>
-  <packaging>nar</packaging>
+  
   <name>Apache BookKeeper :: CPU Affinity Library</name>
   <description>CPU Affinity Library</description>
 
-  <properties>
-    <nar.runtime>dynamic</nar.runtime>
-  </properties>
-
+  
   <dependencies>
     <dependency>
       <groupId>com.google.guava</groupId>
@@ -60,12 +57,6 @@
             <compilerArg>-Xpkginfo:always</compilerArg>
           </compilerArgs>
         </configuration>
-      </plugin>
-      <plugin>
-        <groupId>com.github.maven-nar</groupId>
-        <artifactId>nar-maven-plugin</artifactId>
-        <version>${nar-maven-plugin.version}</version>
-        <extensions>true</extensions>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -111,42 +102,7 @@
          <jdk>[10,)</jdk>
       </activation>
       <build>
-        <plugins>
-          <plugin>
-            <groupId>com.github.maven-nar</groupId>
-            <artifactId>nar-maven-plugin</artifactId>
-            <version>${nar-maven-plugin.version}</version>
-            <extensions>true</extensions>
-            <executions>
-               <execution>
-               <!-- javah is not present in JDK10 onwards,
-                    you have to to use javac -h -->
-                  <id>default-nar-javah</id>
-                  <phase>none</phase>
-               </execution>
-             </executions>
-          </plugin>
-          <plugin>
-             <groupId>org.apache.maven.plugins</groupId>
-             <artifactId>maven-compiler-plugin</artifactId>
-             <version>${maven-compiler-plugin.version}</version>
-             <configuration>
-                <source>1.8</source>
-                <target>1.8</target>
-                <compilerArgs>
-                  <!-- Object.finalize() is deprecated at java 9 -->
-                  <!-- <compilerArg>-Werror</compilerArg> -->
-                  <compilerArg>-Xlint:deprecation</compilerArg>
-                  <compilerArg>-Xlint:unchecked</compilerArg>
-                   <!-- https://issues.apache.org/jira/browse/MCOMPILER-205 -->
-                  <compilerArg>-Xpkginfo:always</compilerArg>
-                  <!-- add -h flag to javac -->
-                  <compilerArg>-h</compilerArg>
-                  <compilerArg>${project.build.directory}/nar/javah-include</compilerArg>
-                </compilerArgs>
-             </configuration>
-          </plugin>
-            </plugins>
+
         </build>
     </profile>
     <profile>
@@ -158,28 +114,7 @@
       </activation>
       <build>
         <plugins>
-          <plugin>
-            <groupId>com.github.maven-nar</groupId>
-            <artifactId>nar-maven-plugin</artifactId>
-            <version>${nar-maven-plugin.version}</version>
-            <extensions>true</extensions>
-            <configuration>
-              <runtime>${nar.runtime}</runtime>
-              <output>cpu-affinity</output>
-              <libraries>
-                <library>
-                  <type>jni</type>
-                  <narSystemPackage>org.apache.bookkeeper.utils.affinity</narSystemPackage>
-                </library>
-              </libraries>
-              <cpp>
-                <optionSet>${nar.cpp.optionSet}</optionSet>
-                <exceptions>false</exceptions>
-                <rtti>false</rtti>
-                <optimize>full</optimize>
-              </cpp>
-            </configuration>
-          </plugin>
+          
         </plugins>
       </build>
     </profile>
@@ -193,31 +128,7 @@
       </activation>
       <build>
         <plugins>
-          <plugin>
-            <groupId>com.github.maven-nar</groupId>
-            <artifactId>nar-maven-plugin</artifactId>
-            <version>${nar-maven-plugin.version}</version>
-            <extensions>true</extensions>
-            <configuration>
-              <runtime>${nar.runtime}</runtime>
-              <output>cpu-affinity</output>
-              <libraries>
-                <library>
-                  <type>jni</type>
-                  <narSystemPackage>org.apache.bookkeeper.utils.affinity</narSystemPackage>
-                </library>
-              </libraries>
-              <cpp>
-                <optionSet>${nar.cpp.optionSet}</optionSet>
-                <exceptions>false</exceptions>
-                <rtti>false</rtti>
-                <optimize>full</optimize>
-              </cpp>
-              <linker>
-                <libSet>rt</libSet>
-              </linker>
-            </configuration>
-          </plugin>
+          
         </plugins>
       </build>
     </profile>

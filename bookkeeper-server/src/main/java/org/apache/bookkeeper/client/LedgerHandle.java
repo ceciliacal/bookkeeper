@@ -680,6 +680,8 @@ public class LedgerHandle implements WriteHandle {
         if (firstEntry < 0 || firstEntry > lastEntry) {
             LOG.error("IncorrectParameterException on ledgerId:{} firstEntry:{} lastEntry:{}",
                     ledgerId, firstEntry, lastEntry);
+            System.out.println("\n------------sto nel 1 if");
+
             cb.readComplete(BKException.Code.IncorrectParameterException, this, null, ctx);
             return;
         }
@@ -687,6 +689,7 @@ public class LedgerHandle implements WriteHandle {
         if (lastEntry > lastAddConfirmed) {
             LOG.error("ReadException on ledgerId:{} firstEntry:{} lastEntry:{}",
                     ledgerId, firstEntry, lastEntry);
+            System.out.println("\n------------sto nel 2 if");
             cb.readComplete(BKException.Code.ReadException, this, null, ctx);
             return;
         }

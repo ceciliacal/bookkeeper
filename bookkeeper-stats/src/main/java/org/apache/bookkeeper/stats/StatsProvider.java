@@ -16,10 +16,11 @@
  */
 package org.apache.bookkeeper.stats;
 
-import java.io.IOException;
-import java.io.Writer;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.lang.StringUtils;
+
+import java.io.IOException;
+import java.io.Writer;
 
 /**
  * Provider to provide stats logger for different scopes.
@@ -41,6 +42,13 @@ public interface StatsProvider {
     /**
      *
      * @param writer
+
+
+
+
+
+
+
      * @throws IOException
      */
     default void writeAllMetrics(Writer writer) throws IOException {
