@@ -112,9 +112,9 @@ public class MyBookkeeperAdminStoredEntriesTest extends BookKeeperClusterTestCas
     }
 
     @Test
-    public void testAreEntriesOfLedgerStoredInTheBookieForLastEmptySegment() throws Exception {
+    public void areEntriesOfLedgerStoredInTheBookieTest() throws Exception {
 
-        int lastEntryId =10;            //num pos, 0, neg, NULL ,Entry{0...100?}
+        int lastEntryId =10;
         int firstEntry=0;
         int ensembleSize = 3;
         int writeQuorumSize = 3;

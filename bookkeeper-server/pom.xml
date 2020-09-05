@@ -271,15 +271,17 @@
           <maxMutationsPerClass>25</maxMutationsPerClass>
           <targetClasses>
 
-            <param>org.apache.bookkeeper.bookie.storage.ldb.WriteCache</param>
+            <param>org.apache.bookkeeper.client.LedgerHandle</param>
             <param>org.apache.bookkeeper.client.BookKeeperAdmin</param>
 
           </targetClasses>
           <targetTests>
 
-            <param>org.apache.bookkeeper.bookie.storage.ldb.WriteCachePutTest</param>
-            <param>org.apache.bookkeeper.bookie.storage.ldb.WriteCacheGetTest</param>
-            <param>org.apache.bookkeeper.client.BookKeeperAdminFormatTest</param>
+	     <param>org.apache.bookkeeper.client.MyAsyncAddEntryTest</param> 
+<!-- <param>org.apache.bookkeeper.client.MyAsyncReadEntryTest</param> -->
+             
+            <param>org.apache.bookkeeper.client.MyBookkeeperAdminStoredEntriesTest</param> 
+            <param>org.apache.bookkeeper.client.MyBookkeeperAdminFormatTest</param>
 
           </targetTests>
         </configuration>
