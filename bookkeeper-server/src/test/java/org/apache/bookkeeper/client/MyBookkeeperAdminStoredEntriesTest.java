@@ -22,7 +22,7 @@ import static org.junit.Assert.*;
 //uso extends perche classe BookkeeperAdmin rappresenta l'admin client per un cluster
 
 @RunWith(value = Parameterized.class)
-public class MyAdminStoredEntriesTest extends BookKeeperClusterTestCase {
+public class MyBookkeeperAdminStoredEntriesTest extends BookKeeperClusterTestCase {
 
     private BookKeeper.DigestType digestType = BookKeeper.DigestType.CRC32;
     private static final String PASSWORD = "testPasswd";
@@ -39,7 +39,7 @@ public class MyAdminStoredEntriesTest extends BookKeeperClusterTestCase {
     List<BookieSocketAddress> ensembleOfSegment1, ensembleOfSegment2;
     private int lastEntryId;
 
-    public MyAdminStoredEntriesTest(boolean expectedResult,  long ledgerId, boolean bookieSocketAddressIsValid,boolean ledgerManagerIsValid, int invalidLedgerCase, int invalidAddressCase) {
+    public MyBookkeeperAdminStoredEntriesTest(boolean expectedResult, long ledgerId, boolean bookieSocketAddressIsValid, boolean ledgerManagerIsValid, int invalidLedgerCase, int invalidAddressCase) {
         super(numBookies);
         setAutoRecoveryEnabled(true);
 

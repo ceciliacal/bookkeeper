@@ -1,6 +1,7 @@
 package org.apache.bookkeeper.client;
 
 
+import com.google.common.util.concurrent.UncheckedExecutionException;
 import org.apache.bookkeeper.conf.ClientConfiguration;
 import org.apache.bookkeeper.test.BookKeeperClusterTestCase;
 import org.junit.After;
@@ -22,7 +23,7 @@ import static org.junit.Assert.assertEquals;
 //uso extends perche classe BookkeeperAdmin rappresenta l'admin client per un cluster
 
 @RunWith(value = Parameterized.class)
-public class MyBookkeeperAdminTest extends BookKeeperClusterTestCase {
+public class MyBookkeeperAdminFormatTest extends BookKeeperClusterTestCase {
 
     private BookKeeper.DigestType digest = BookKeeper.DigestType.CRC32;
 
@@ -41,7 +42,7 @@ public class MyBookkeeperAdminTest extends BookKeeperClusterTestCase {
 
 
     //public MyBookkeeperAdminTest(boolean expectedRes, ServerConfiguration serverConf, boolean isInteractive, boolean force) {
-    public MyBookkeeperAdminTest(boolean expectedRes, boolean serverConfIsValid, boolean isInteractive, boolean force, int countTest) {
+    public MyBookkeeperAdminFormatTest(boolean expectedRes, boolean serverConfIsValid, boolean isInteractive, boolean force, int countTest) {
 
         super(numBookies);
 
@@ -138,8 +139,13 @@ public class MyBookkeeperAdminTest extends BookKeeperClusterTestCase {
 
             }
 
-        } catch (Exception e){
+
+        } catch( UncheckedExecutionException e){
             res = false;
+            e.printStackTrace();
+
+        } catch (Exception e) {
+            res= false;
             e.printStackTrace();
         }
 
