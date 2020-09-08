@@ -1575,7 +1575,6 @@ public class BookKeeperAdmin implements AutoCloseable {
             }
         }
     }
-//sto testando questo (ledgerMetadata)
     public static boolean areEntriesOfLedgerStoredInTheBookie(long ledgerId, BookieSocketAddress bookieAddress,
             LedgerMetadata ledgerMetadata) {
         Collection<? extends List<BookieSocketAddress>> ensemblesOfSegments = ledgerMetadata.getAllEnsembles().values();

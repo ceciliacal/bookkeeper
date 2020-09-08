@@ -116,13 +116,11 @@ public class MyAsyncAddEntryTest extends BookKeeperClusterTestCase implements As
 
         boolean res;
 
-        System.out.println("\n------------FUORI AL TRY!!!!!");
         try {
             res = true;
-            System.out.println("\n------------STO DENTRO AL TEST !!!!!");
 
             if (isCbValid) {
-                System.out.println("\n--------isCbValid: "+isCbValid+"  -> this");
+                //System.out.println("\n--------isCbValid: "+isCbValid+"  -> this");
                 lh.asyncAddEntry(data, offset, lenght, this, sync);
 
 
@@ -130,7 +128,7 @@ public class MyAsyncAddEntryTest extends BookKeeperClusterTestCase implements As
 
             }
             else{
-                System.out.println("\n--------isCbValid: "+isCbValid+"  -> null");
+                //System.out.println("\n--------isCbValid: "+isCbValid+"  -> null");
                 lh.asyncAddEntry(data, offset, lenght, null, sync);
 
             }

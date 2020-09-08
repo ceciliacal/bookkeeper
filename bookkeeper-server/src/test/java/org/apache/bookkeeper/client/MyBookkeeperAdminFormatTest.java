@@ -114,7 +114,6 @@ public class MyBookkeeperAdminFormatTest extends BookKeeperClusterTestCase {
     public void formatTest() throws InterruptedException, BKException, IOException {
         boolean res;
 
-        System.out.println("======================================= STO NEL TEST !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         if (isInteractive){
             //deve rispondere una volta si e una no
             if ( (countTest%2)==0 ) {

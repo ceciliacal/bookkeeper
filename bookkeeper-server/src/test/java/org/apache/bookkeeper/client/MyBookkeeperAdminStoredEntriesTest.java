@@ -90,20 +90,12 @@ public class MyBookkeeperAdminStoredEntriesTest extends BookKeeperClusterTestCas
     public static Collection<?> getTestParameters() {
         return Arrays.asList(new Object[][] {
 
-                //bookieSocketAddress valido, ledgerMetadata NO (3 casi)
+
                 {true, 100L, true, true,0,0},
                 {false, 100L, true, false,1,0},
-                {false, 100L, true, false,2,0},
-                {false, 100L, true, false,3,0},
-                //bookieSocketAddress NON valido (2 casi), ledgerMetadata NON (3 casi)
-                {false, 100L, false, true,0,1},
-                {false, 100L, false, false,1,1},
                 {false, 100L, false, false,2,1},
-                {false, 100L, false, false,3,1},
+                {false, 100L, true, false,3,0},
                 {false, 100L, false, true,0,2},
-                {false, 100L, false, false,1,2},
-                {false, 100L, false, false,2,2},
-                {false, 100L, false, false,3,2},
 
 
                 // il parametro long ledgerId effettivamente è inutilizzato nel metodo,
@@ -209,13 +201,6 @@ public class MyBookkeeperAdminStoredEntriesTest extends BookKeeperClusterTestCas
         assertEquals(res,expectedResult);
 
         System.out.println("\n========================FINE PRINT========================== \n");
-        /*
 
-        assertFalse("expected areEntriesOfLedgerStoredInTheBookie to return False for bookie3",
-                BookKeeperAdmin.areEntriesOfLedgerStoredInTheBookie(ledgerId, bookie3, meta));
-        assertTrue("expected areEntriesOfLedgerStoredInTheBookie to return true for bookie2",
-                BookKeeperAdmin.areEntriesOfLedgerStoredInTheBookie(ledgerId, bookie2, meta));
-
-         */
     }
 }

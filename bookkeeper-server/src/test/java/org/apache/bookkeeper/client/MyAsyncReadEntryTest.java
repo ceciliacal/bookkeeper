@@ -147,15 +147,12 @@ public class MyAsyncReadEntryTest extends BookKeeperClusterTestCase implements A
     @Test
     public void myTest()  {
 
-        boolean res;
-
-            System.out.println("\n------------FUORI AL TRY!!!!!");
+            boolean res;
 
             res = true;
 
             if (isCbValid) {
                 lh.asyncReadEntries(firstEntry, lastEntry, this, sync);
-                System.out.println("\n------------STO DENTRO AL TEST !!!!!");
 
             } else {
                 lh.asyncReadEntries(firstEntry, lastEntry, null, sync);
