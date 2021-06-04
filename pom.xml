@@ -158,7 +158,7 @@
     <powermock.version>2.0.2</powermock.version>
     <prometheus.version>0.8.1</prometheus.version>
     <datasketches.version>0.8.3</datasketches.version>
-    <httpclient.version>4.5.5</httpclient.version>
+    <httpclient.version>4.5.13</httpclient.version>
     <protobuf.version>3.5.1</protobuf.version>
     <protoc3.version>3.5.1-1</protoc3.version>
     <protoc-gen-grpc-java.version>1.12.0</protoc-gen-grpc-java.version>
